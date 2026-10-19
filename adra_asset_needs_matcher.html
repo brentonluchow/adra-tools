@@ -186,7 +186,7 @@
     </div>
     <p>Mission Ready is a joint initiative of the South Pacific Division of Seventh-day Adventists and the Adventist Development and Relief Agency.</p>
     <p class="strap">Training. Funding. Projects.</p>
-    <p>Nothing you enter here is saved or sent anywhere. Postcode data: ABS 2021 Census and SEIFA 2021.</p>
+    <p>Nothing you enter here is saved or sent anywhere. Postcode data: ABS 2021 Census and SEIFA 2021. Results from the 2026 Census are due from June 2027 (SEIFA from 2028).</p>
     <p><button id="staffToggle" class="linkbtn" aria-pressed="false" hidden>ADRA staff view</button></p>
   </footer>
 </div>
@@ -895,9 +895,9 @@ function programBody(r, rec) {
   } else if (n.score === null) {
     why = `<p>We could not work out a need score for ${p.name}, because the measures were missing or too small to trust.</p>${left}${conf}${gaps}`;
   } else if (n.hitTexts.length) {
-    why = `<p>The need score for ${p.name} here is <strong>${n.score} out of 100</strong>, compared with other areas of Australia. These are the measures that are highest for your area:</p><ul>${li(n.hitTexts)}</ul><p>${p.needNote}</p><p class="small">The Census data is from August 2021.</p>${conf}${left}${gaps}`;
+    why = `<p>The need score for ${p.name} here is <strong>${n.score} out of 100</strong>, compared with other areas of Australia. These are the measures that are highest for your area:</p><ul>${li(n.hitTexts)}</ul><p>${p.needNote}</p><p class="small">The Census data is from August 2021. New data from the 2026 Census is due from June 2027.</p>${conf}${left}${gaps}`;
   } else {
-    why = `<p>The need score for ${p.name} here is <strong>${n.score} out of 100</strong>, compared with other areas of Australia. No single measure is high. A project can still be right if people in your community tell you there is a need.</p><p class="small">The Census data is from August 2021.</p>${conf}${left}${gaps}`;
+    why = `<p>The need score for ${p.name} here is <strong>${n.score} out of 100</strong>, compared with other areas of Australia. No single measure is high. A project can still be right if people in your community tell you there is a need.</p><p class="small">The Census data is from August 2021. New data from the 2026 Census is due from June 2027.</p>${conf}${left}${gaps}`;
   }
   const flagsBlock = (rec && (n.flags.length || n.gate.status === 'borderline'))
     ? `<div class="callout"><strong>Next steps for your area</strong>${n.gate.status === 'borderline' ? `<p>${n.gate.message}</p>` : ''}${n.flags.length ? `<ul>${li(n.flags.map(f => f.message))}</ul>` : ''}</div>` : '';
@@ -1057,6 +1057,14 @@ function dataBlock(found, rec, results) {
       <p>Each measure is scored from 0 to 100 by comparing your area with other postcodes in Australia (100 means higher than almost every other area). The need score for each project is the weighted average of its measures. Measures with too few people behind them are left out, and the other weights are scaled up to match. SEIFA is the ABS ranking of how disadvantaged each area is, from 1 (most) to 10 (least).</p>
       ${tables}
       ${multi}
+      <h3>When newer data will be available</h3>
+      <p>The 2026 Census was held on 11 August 2026. The ABS is releasing the results in three stages, so this tool keeps using the 2021 Census until the data it needs is out.</p>
+      <ul>
+        <li><strong>June 2027:</strong> most topics, including postcode figures for income, families, housing, language, English, cars and health conditions.</li>
+        <li><strong>October 2027:</strong> work and unemployment, and where people lived one year ago.</li>
+        <li><strong>Early to mid 2028:</strong> SEIFA rankings.</li>
+      </ul>
+      <p class="small">Dates are from the ABS release plan (July 2026) and may change. When new data is out, check with ADRA that you are using the latest version of this tool.</p>
       <h3>What the data cannot show</h3>
       <ul>
         <li>The Census data is from August 2021. Local conditions, especially cost of living and rents, may have changed.</li>
@@ -1446,7 +1454,31 @@ function renderStaffPanel(rec, found, r, results, tier) {
         <div style="margin-top:12px"><button class="secondary" id="copyNote">Copy as text</button><span id="copyMsg" class="small" style="margin-left:10px"></span></div>
       </div>
     </details>
+    ${releaseNotesHtml()}
   </section>`;
+}
+
+// ---------- When newer Census data arrives (for ADRA staff) ----------
+function releaseNotesHtml() {
+  return `<details class="option"><summary><span class="opt-name">When newer Census data arrives: what to plan for</span></summary>
+    <div class="option-body">
+      <p>The 2026 Census was held on Tuesday 11 August 2026. The ABS will release it in three stages. This tool uses the 2021 Census and SEIFA 2021 until the data below is out and the tool has been rebuilt.</p>
+      <div class="table-wrap"><table class="data-table"><tr><th>Release</th><th>When</th><th>What this tool can then update</th></tr>
+        <tr><td>First release</td><td>June 2027</td><td>Babies and adults (age), one-parent families, household and family income, personal income, tenure and landlord type (rented, social housing), rent and mortgage, lone-person households and older people living alone, need for assistance, long-term health conditions, cars, Indigenous status, language and English, country of birth and year of arrival</td></tr>
+        <tr><td>Second release</td><td>October 2027</td><td>Unemployment (labour force status), labour force status of parents in families (low income working families), moved house in the last year (address one year ago)</td></tr>
+        <tr><td>Third release</td><td>Early to mid 2028</td><td>SEIFA rankings (IRSD, IER, IEO), estimates of homelessness</td></tr>
+      </table></div>
+      <h4>Things to decide or check</h4>
+      <ul>
+        <li><strong>Young mothers:</strong> the question on number of children ever born is not in the 2026 Census (it returns in 2031). That measure is 20% of Welcome Baby's weight and drives a flag, so it stays on 2021 data or needs a replacement.</li>
+        <li><strong>Mixed years:</strong> until SEIFA 2026 arrives in 2028, the tool would combine 2026 Census measures with 2021 SEIFA rankings. Decide whether to switch in stages or wait.</li>
+        <li><strong>New data tools:</strong> Community Profiles are retired, and DataPacks and GeoPackages are replaced by a new aggregate download tool. The table codes this tool's data build uses (G01 to G62) will not carry over. The ABS product preview in April 2027, using reshaped 2021 data, is the time to rebuild and test.</li>
+        <li><strong>Worth checking:</strong> rent and mortgage affordability indicators (first release) could replace the rent-to-income proxy in My Money. A new count of dependent children under 5 in a family may help with babies and young children by family type. The link between parents' English and children's ages (used for Welcome Baby) is not clearly listed.</li>
+        <li><strong>Comparing years:</strong> the long-term health question has a new liver disease option and clearer mental health wording, so compare 2026 with 2021 carefully.</li>
+      </ul>
+      <p class="small">Dates are from the ABS 2026 Census product guide (28 July 2026) and may change. Sources: ${link('https://www.abs.gov.au/statistics/research/2026-census-topics-and-data-release-plan', '2026 Census topics and data release plan')} and ${link('https://www.abs.gov.au/census/guide-census-data/2026-census-product-guide/2026', '2026 Census product guide')}.</p>
+    </div>
+  </details>`;
 }
 
 
