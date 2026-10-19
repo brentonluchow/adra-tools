@@ -328,6 +328,7 @@ const ASSET_GROUPS = [
     { id: 'circle', short: 'Chairs that can go in a circle', label: 'Chairs can be set up in a circle or horseshoe, not fixed rows' },
     { id: 'regular', short: 'A regular booking for the room', label: 'The room is free at the same time every week or fortnight' },
     { id: 'kitchen', short: 'A kitchen or drinks station', label: 'A kitchen or drinks station with hot and cold water' },
+    { id: 'commercialkitchen', short: 'A commercial kitchen', label: 'A commercial kitchen (this also counts as a kitchen)' },
     { id: 'privatechat', short: 'A private chat space', label: 'A separate quiet space for private chats, with a window or open door so it can still be seen into' },
     { id: 'babyfeed', short: 'A baby feeding and settling space', label: 'A clean, quiet space for feeding or settling a baby' },
     { id: 'nappy', short: 'A nappy-change area', label: 'A nappy-change area' },
@@ -430,7 +431,7 @@ const PROGRAMS = [
     ],
     distinctive: ['cm_lone_older', 'cm_social_housing', 'cm_low_pers_income'],
     hard: ['room', 'kitchen', 'insurance'],
-    soft: ['privatechat', 'regular', 'access', 'parking', 'signal', 'safety', 'storage', 'referrals', 'communitylinks'],
+    soft: ['commercialkitchen', 'privatechat', 'regular', 'access', 'parking', 'signal', 'safety', 'storage', 'referrals', 'communitylinks'],
     team: att => ({
       required: 5,
       text: 'At least 5 ADRA Lead volunteers (registered and screened with ADRA). A full team has a Project Manager, a Lead Facilitator, co-facilitators, a kitchen and serving team, greeters and a listening ear. Other church members can help as supporters.',
@@ -509,7 +510,7 @@ function getVolunteers() {
 }
 
 function assessVenue(program) {
-  const has = id => state.assets.has(id);
+  const has = id => state.assets.has(id) || (id === 'kitchen' && state.assets.has('commercialkitchen'));   // a commercial kitchen is also a kitchen
   const hardMissing = program.hard.filter(id => !has(id));
   const softMissing = program.soft.filter(id => !has(id));
   const hardMet = program.hard.length - hardMissing.length;
