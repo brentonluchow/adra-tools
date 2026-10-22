@@ -38,6 +38,11 @@
 
   .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px 22px 24px; margin-bottom:18px; }
   .disclaimer { background:var(--green-tint); border-left:6px solid var(--green); padding:14px 18px; border-radius:8px; margin:16px 0; }
+  select { width:100%; padding:.7rem .8rem; font:inherit; color:inherit; background:#fff; border:2px solid var(--line); border-radius:8px; }
+  .contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; margin-top:8px; }
+  .contact { border:1px solid var(--line); border-radius:8px; padding:4px 16px 12px; background:#fff; }
+  .contact h3 { margin:12px 0 6px; font-size:1.05rem; color:var(--green-dark); }
+  .contact p { margin:4px 0; overflow-wrap:anywhere; }
   .card.soft { background:var(--green-tint); border-color:#bfdcd2; }
   .card h2 { font-size:1.45rem; margin:0 0 10px; color:var(--green); }
   .card > h2:first-child::after, .hero h2::after { content:''; display:block; width:56px; height:4px; background:var(--orange); margin-top:8px; border-radius:2px; }
@@ -355,7 +360,7 @@ ASSET_GROUPS.forEach(g => g.items.forEach(i => { ASSET_INDEX[i.id] = i; }));
 
 const PROGRAMS = [
   {
-    id: 'mymoney', name: 'My Money', tagline: 'A free money skills group for adults',
+    id: 'mymoney', name: 'My Money', tagline: 'A free six-week program building everyday money confidence',
     summary: 'Six weekly sessions of about 90 minutes where adults build confidence with budgeting, tracking spending, understanding debt and finding support services. It is open to anyone aged 18 and over, and it is education, not financial advice.',
     rhythm: 'Six weekly sessions of about 90 minutes',
     needNote: 'Tight budgets, renting and unemployment are what My Money is built to help with.',
@@ -389,7 +394,7 @@ const PROGRAMS = [
     ],
   },
   {
-    id: 'welcomebaby', name: 'Welcome Baby', tagline: 'A 12-month support group for parents and carers with babies',
+    id: 'welcomebaby', name: 'Welcome Baby', tagline: 'Twelve months of connection for new parents and caregivers',
     summary: 'A free community of support that meets fortnightly for 12 months (24 sessions of 2 hours). It offers clothing packs, peer connection, guest speakers and a warm handover to other services at the end. It is for anyone caring for a baby, including fathers, grandparents and foster carers.',
     rhythm: 'Fortnightly for 12 months (24 sessions of 2 hours)',
     needNote: 'Families with young children and few supports often find it hard to get help once the first weeks with a baby are over. The Census cannot show single parents of babies under 12 months exactly, so check with your local Maternal and Child Health service or hospital.',
@@ -421,8 +426,8 @@ const PROGRAMS = [
     ],
   },
   {
-    id: 'communitymeals', name: 'Community Meals', tagline: 'Free shared meals with room for connection',
-    summary: 'Free, welcoming meals hosted by your church, with time to talk and warm links to local services. Run it weekly, fortnightly or monthly. Anyone is welcome, with no questions asked about need.',
+    id: 'communitymeals', name: 'Community Meals', tagline: 'More than a meal: a table for connection, dignity and hope',
+    summary: 'Free, welcoming meals hosted by your church, with time to talk and warm, personal links to local services. Guests are invited to give as well as receive through simple pay-it-forward ideas that protect dignity. Run it weekly, fortnightly or monthly. Anyone is welcome, with no questions asked about need.',
     rhythm: 'Weekly, fortnightly or monthly, about 90 minutes to 2 hours each time',
     needNote: 'Older people and people living alone can be isolated, and a low income can mean going without good meals.',
     metrics: [
@@ -477,7 +482,7 @@ const SHORT_TEXT = {
     providesShort: 'Funding support, a full resource kit and facilitator training.',
   },
   communitymeals: {
-    summary: 'Free, welcoming meals hosted by your church, with time to talk and links to local services. Run it weekly, fortnightly or monthly. Anyone can come, and no one is asked about their need.',
+    summary: 'Free, welcoming meals hosted by your church, with time to talk and warm, personal links to local services. Guests can give as well as receive through simple pay-it-forward ideas. Run it weekly, fortnightly or monthly. Anyone can come, and no one is asked about their need.',
     teamShort: 'At least 5 ADRA Lead volunteers, the core team who sign up with ADRA and complete safety checks. Other church members can help with set-up and pack-up.',
     checksShort: 'Lead volunteers sign up with ADRA and have a Working with Children Check or Police Check. Always keep two adults present.',
     dataGap: 'The Census cannot show food insecurity directly, so ask local food relief and welfare services what they see.',
@@ -537,6 +542,36 @@ const INNOVATION_QUESTIONS = [
   'We have people willing to lead and keep it going for at least 3 months.',
   'We are willing to try, review and change our approach as we learn.',
 ];
+
+// ---------- Conference regions and ADRA contacts ----------
+// ADRA Australia details: adra.org.au contact page and ADRA newsletters (confirm the email is still current).
+// A region with contact: null shows ADRA Australia's details only.
+const ADRA_AUSTRALIA = { name: 'ADRA Australia', phones: ['1800 242 372', '02 9489 5488'], email: 'info@adra.org.au', post: '146 Fox Valley Rd (PO Box 129), Wahroonga NSW 2076' };
+const REGIONS = [
+  { id: 'nnsw', name: 'North NSW', contact: null },
+  { id: 'snsw', name: 'South NSW', contact: null },
+  { id: 'gsyd', name: 'Greater Sydney', contact: null },
+  { id: 'sqld', name: 'South QLD', contact: { name: 'Lisa Booth', role: 'ADRA Regional Manager', phone: '0407 125 025', email: 'lisabooth@adra.org.au' } },
+  { id: 'nth', name: 'Northern Australia', contact: { name: 'Laufili Ah You', role: 'Conference ADRA Director', phone: '0404 196 170', email: 'LaufiliAhYou@adventist.org.au' } },
+  { id: 'sa', name: 'South Australia', contact: null },
+  { id: 'wa', name: 'Western Australia', contact: { name: 'Francis Ejones', role: 'ADRA Regional Manager', phone: '0470 622 110', email: 'FrancisEJones@adra.org.au' } },
+  { id: 'tas', name: 'Tasmania', contact: { name: 'Lesley Irvine', role: 'ADRA Regional Manager', phone: '0428 880 287', email: 'LesleyIrvine@adra.org.au' } },
+  { id: 'vic', name: 'Victoria', contact: { name: 'Rebecca Auriant', role: 'Conference ADRA Director', phone: '0411 865 790', email: 'RebeccaAuriant@adventist.org.au' } },
+];
+const regionById = id => REGIONS.find(r => r.id === id) || null;
+
+// Which conference regions suit a postcode. A state with one conference selects it automatically.
+// The ACT belongs to South NSW and the NT to Northern Australia. Queensland offers Northern Australia
+// or South QLD, and NSW offers its three. An unrecognised postcode offers every region.
+const STATE_REGIONS = { WA: ['wa'], SA: ['sa'], TAS: ['tas'], VIC: ['vic'], ACT: ['snsw'], NT: ['nth'], NSW: ['nnsw', 'snsw', 'gsyd'], QLD: ['nth', 'sqld'] };
+function regionChoicesFor(postcodeInput) {
+  const codes = parsePostcodeInput(postcodeInput).codes;
+  const ids = new Set(); let open = false;
+  codes.forEach(c => { const st = getStateFromPostcode(c); if (st && STATE_REGIONS[st]) STATE_REGIONS[st].forEach(i => ids.add(i)); else open = true; });
+  if (!codes.length || open) return { regions: REGIONS, auto: null, narrowed: false };
+  const regions = REGIONS.filter(r => ids.has(r.id));
+  return { regions, auto: regions.length === 1 ? regions[0].id : null, narrowed: true };
+}
 
 
 // =====================================================================
@@ -762,7 +797,7 @@ function innovationPrompts(rec) {
 // STATE
 // =====================================================================
 let state = {
-  step: 0, name: '', postcodeInput: '',
+  step: 0, name: '', postcodeInput: '', region: '',
   assets: new Set(), volunteers: '', attendance: '', screening: '', hours: '',
   consult: { text: '', date: '' }, staff: false, staffLink: false,
 };
@@ -817,6 +852,10 @@ function renderStep1() {
     <label class="field-label" for="postcodes">What is your church’s postcode?</label>
     <input type="text" id="postcodes" inputmode="numeric" autocomplete="postal-code" value="${esc(state.postcodeInput)}" placeholder="For example 2250">
     <p class="help">If your church serves more than one postcode, add them all, separated by commas (for example 2250, 2260).</p>
+    ${staffTip('Ask which conference the church belongs to. It decides which ADRA contact appears in the results and in the printed or copied summary. For Western Australia, South Australia, Tasmania, Victoria, the ACT and the NT it is chosen from the postcode.')}
+    <label class="field-label" for="region">Which conference region is your church in? <span class="optional">(optional)</span></label>
+    <select id="region">${regionOptionsHtml()}</select>
+    <p class="help" id="regionHelp">${regionHelpText()}</p>
     <label class="field-label" for="churchName">Church name <span class="optional">(optional)</span></label>
     <input type="text" id="churchName" autocomplete="organization" value="${esc(state.name)}">
     <p id="msg1" class="msg" role="alert"></p>
@@ -1028,9 +1067,13 @@ function disasterBlock(found) {
     }
   }
   return `
-  <section class="card soft">
-    <h2>Disaster readiness training: in development</h2>
-    <p>ADRA is developing a disaster-focused training resource for churches to offer to families within the community. It will focus on helping families make a family emergency plan, so they are ready to put it into action in an emergency such as a flood or fire. It is not ready in every region yet. If bushfire, flood, cyclone or storm is a real risk where you live, tell your local ADRA Regional Manager so your region is kept in mind. Census data cannot show disaster risk, so this tool does not score it.</p>
+  <section class="card soft" id="homesafe">
+    <h2>HomeSafe: a simple event for every church</h2>
+    <p class="tagline">Inviting neighbours to be led through simple household emergency planning</p>
+    <p>HomeSafe is a one-off event. Your church invites neighbours to an afternoon tea and helps them put together a household emergency plan, so families are ready when disaster strikes. Families who prepared say that a plan, a survival kit, a list of important documents and being mentally ready helped their recovery.</p>
+    <p>You choose how it is led. An outside preparedness education facilitator can run the session, or ADRA trains a local church leader to run it.</p>
+    <p>You can host it in a hall or your church with one ADRA-registered and screened facilitator or host, supported by church members who want to come. ADRA provides the safeguarding and governance framework and simple tools to measure impact, and can help you bring in a facilitator or train your own. Talk with your ADRA Regional Manager about how to get started.</p>
+    <p class="small">The Census cannot show how ready families are for a disaster, so this tool does not score HomeSafe. It suits every church.</p>
     ${history}
   </section>`;
 }
@@ -1104,7 +1147,7 @@ function renderResults() {
     <section class="card hero">
       <div class="kicker">What the data shows</div>
       <h2>No clear match from the local data</h2>
-      <p>${failNotes ? 'Some projects are not recommended here, and the others show a low need on the Census numbers.' : 'On the Census numbers, none of the three projects show a high enough need in this area.'} That does not mean there is no need, because the data cannot see everything.</p>${failNotes ? `<ul>${failNotes}</ul>` : ''}<p>Here is a good way forward:</p>
+      <p>${failNotes ? 'Some projects are not recommended here, and the others show a low need on the Census numbers.' : 'On the Census numbers, none of Community Meals, My Money or Welcome Baby show a high enough need in this area.'} That does not mean there is no need, because the data cannot see everything.</p>${failNotes ? `<ul>${failNotes}</ul>` : ''}<p>Here is a good way forward:</p>
       <ol>
         <li><strong>Listen first.</strong> Talk with local services, schools and council, and with people in your community, about what they need.</li>
         <li><strong>If a core project still feels right,</strong> you can start with the closest match below and speak with ADRA about it.</li>
@@ -1112,6 +1155,7 @@ function renderResults() {
       </ol>
     </section>
     ${disclaimerHtml()}
+    ${contactsHtml()}
     ${innovationBlock(rec, true)}
     <h2 class="section-label">The three projects, in case one still fits</h2>
     ${results.map(r => optionCard(r, rec)).join('')}`;
@@ -1123,6 +1167,7 @@ function renderResults() {
       ? `<div class="callout"><strong>The data shows only a low need here.</strong> The need score for ${top.program.name} is ${top.need.score} out of 100, so treat this as a starting point. Talk with people in your community about what they need before you go further. If you find a specific group these projects would miss, see the Innovations option below.</div>` : '';
     main = `${heroCard(top, rec, kicker, (extra || '') + jointNote(top))}
     ${disclaimerHtml()}
+    ${contactsHtml()}
     <h2 class="section-label">Other options</h2>
     ${others.map(r => optionCard(r, rec, top)).join('')}
     ${innovationBlock(rec, tier === 'limited')}`;
@@ -1159,8 +1204,9 @@ function goTo(step) { state.step = step; render(); window.scrollTo({ top: 0, beh
 function attachHandlers() {
   const $ = id => document.getElementById(id);
   if (state.step === 0) {
-    $('postcodes').addEventListener('input', e => state.postcodeInput = e.target.value);
+    $('postcodes').addEventListener('input', e => { state.postcodeInput = e.target.value; refreshRegion(); });
     $('churchName').addEventListener('input', e => state.name = e.target.value);
+    $('region').addEventListener('change', e => { state.region = e.target.value; });
     const go = () => {
       const parsed = parsePostcodeInput(state.postcodeInput);
       if (parsed.codes.length === 0) {
@@ -1191,7 +1237,7 @@ function attachHandlers() {
     $('back3').addEventListener('click', () => goTo(1));
     $('printBtn').addEventListener('click', doPrint);
     $('resetBtn').addEventListener('click', () => {
-      state = { step: 0, name: '', postcodeInput: '', assets: new Set(), volunteers: '', attendance: '', screening: '', hours: '', consult: { text: '', date: '' }, staff: state.staff, staffLink: state.staffLink };
+      state = { step: 0, name: '', postcodeInput: '', region: '', assets: new Set(), volunteers: '', attendance: '', screening: '', hours: '', consult: { text: '', date: '' }, staff: state.staff, staffLink: state.staffLink };
       render(); window.scrollTo({ top: 0 });
     });
     const boxes = document.querySelectorAll('input[data-innov]');
@@ -1242,6 +1288,42 @@ window.addEventListener('afterprint', () => document.querySelectorAll('details')
 const DISCLAIMER_FULL = 'This tool is a guide only. It is not a replacement for authentic community consultation, meeting with local community leaders and researching local needs. Talking with ADRA Australia and your ADRA Regional Manager for your conference area is a key part of the Mission Ready journey.';
 function disclaimerHtml() {
   return `<aside class="disclaimer" aria-label="About this tool"><strong>This tool is a guide only.</strong> It is not a replacement for authentic community consultation, meeting with local community leaders and researching local needs. Talking with ADRA Australia and your ADRA Regional Manager for your conference area is a key part of the Mission Ready journey.</aside>`;
+}
+
+// ---------- Who to talk to next (prints with the results) ----------
+const telHref = p => 'tel:' + p.replace(/\s+/g, '');
+function contactsHtml() {
+  const reg = regionById(state.region), c = reg && reg.contact, a = ADRA_AUSTRALIA;
+  const regional = c ? `<div class="contact"><h3>Your ADRA contact for ${reg.name}</h3>
+      <p><strong>${esc(c.name)}</strong>${c.role ? `<br>${c.role}` : ''}</p>
+      <p>Phone: <a href="${telHref(c.phone)}">${c.phone}</a><br>Email: <a href="mailto:${c.email}">${c.email}</a></p></div>` : '';
+  return `<section class="card contacts" aria-labelledby="contactsHead">
+    <h2 id="contactsHead">Who to talk to next</h2>
+    <p>Talking with ADRA early is a key part of the Mission Ready journey. ${c ? 'Your regional contact and ADRA Australia can both help.' : 'ADRA Australia can help with your next steps.'}</p>
+    <div class="contact-grid">${regional}
+      <div class="contact"><h3>${a.name}</h3>
+        <p>Phone: ${a.phones.map(p => `<a href="${telHref(p)}">${p}</a>`).join(' or ')}<br>Email: <a href="mailto:${a.email}">${a.email}</a><br>Post: ${a.post}</p></div>
+    </div>
+  </section>`;
+}
+
+// ---------- Conference choices follow the postcode ----------
+function regionOptionsHtml() {
+  const { regions, auto } = regionChoicesFor(state.postcodeInput);
+  if (auto) state.region = auto;
+  else if (state.region && !regions.some(r => r.id === state.region)) state.region = '';
+  return (auto ? '' : '<option value="">Not sure, or not selected</option>') + regions.map(r => `<option value="${r.id}" ${state.region === r.id ? 'selected' : ''}>${r.name}</option>`).join('');
+}
+function regionHelpText() {
+  const { auto, narrowed } = regionChoicesFor(state.postcodeInput);
+  if (auto) return 'Selected for you from your postcode. We use it to show your local ADRA contact.';
+  if (narrowed) return 'These are the conference regions for your postcode. We use your choice to show your local ADRA contact. If you leave it blank, we show ADRA Australia’s details.';
+  return 'We use this to show your local ADRA contact. If you leave it blank, we show ADRA Australia’s details.';
+}
+function refreshRegion() {
+  const sel = document.getElementById('region'); if (!sel) return;
+  sel.innerHTML = regionOptionsHtml(); sel.value = state.region;
+  const h = document.getElementById('regionHelp'); if (h) h.textContent = regionHelpText();
 }
 
 
@@ -1424,7 +1506,7 @@ function buildSessionSummary(rec, found, results, tier) {
     : tier === 'none' ? 'No clear match from the local data. Listen to the community first, and consider Innovations if a specific group is identified.'
     : `No Census data for this postcode. Closest match on the church’s strengths: ${top.program.name}.`;
   const L = ['MISSION READY PROJECT FINDER: RESULTS SUMMARY',
-    `Church: ${state.name.trim() || '[church name]'} | Postcode: ${codes} | Date: ${todayStr()}`,
+    `Church: ${state.name.trim() || '[church name]'} | Postcode: ${codes} | Conference region: ${(regionById(state.region) || {}).name || 'not selected'} | Date: ${todayStr()}`,
     `Outcome: ${outcome}`, '', 'Need by project:'];
   results.forEach(r => L.push(`- ${r.program.name}: ${NEED_WORDS[r.need.level]}` + (r.need.score !== null ? ` (need score ${r.need.score} out of 100, confidence ${r.need.confidence})` : '') + (r.gateFail ? `. Not recommended here: ${r.need.gate.message}` : '') + (r.need.hitFigures.length ? `. High: ${r.need.hitFigures.join('; ')}` : '') + (r.need.missing.length ? `. Left out: ${r.need.missing.join('; ')}` : '')));
   if (tier !== 'none') {
@@ -1439,6 +1521,9 @@ function buildSessionSummary(rec, found, results, tier) {
   }
   if (tier !== 'none' && top.need.flags.length) { L.push('', 'Next steps for your area:'); top.need.flags.forEach(f => L.push(`- ${f.message}`)); }
   if (tier !== 'none' && top.joint) L.push('', `Joint options: ${top.program.name} and ${top.joint.program.name} (need scores within 5 points). Talk through which fits the church better.`);
+  { const reg = regionById(state.region), a = ADRA_AUSTRALIA; L.push('', 'ADRA contacts:');
+    if (reg && reg.contact) L.push(`- ${reg.contact.name}${reg.contact.role ? ', ' + reg.contact.role : ''} (ADRA contact for ${reg.name}): ${reg.contact.phone}, ${reg.contact.email}`);
+    L.push(`- ${a.name}: ${a.phones.join(' or ')}, ${a.email}, ${a.post}`); }
   L.push('', 'Notes from the conversation: [add]');
   L.push('', DISCLAIMER_FULL);
   return L.join('\n');
